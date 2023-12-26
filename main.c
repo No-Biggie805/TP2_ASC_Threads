@@ -47,12 +47,3 @@ int main()
 }
 
 
-void PrintTemperaturas(temp_t *arrayVal)
-{
-    int i;
-    int Array_size = sizeof(arrayVal->arr_temperatura) / sizeof(arrayVal->arr_temperatura[0]);
-    for (i = 0; i <= Array_size; i++)
-    {
-        printf("%d\n", arrayVal->arr_temperatura[i]);
-    }
-}
