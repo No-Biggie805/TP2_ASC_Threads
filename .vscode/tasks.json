@@ -1,0 +1,28 @@
+//criar tarefas para build, o essencial para poder compilar com ctrl+shift+b
+//Mexer se quiser adicionar mais ficheiros, os especificos neste caso seriam main.c, lux.c, temp.c, etc...
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "shell",
+			"label": "C/C++: gcc build active file",
+			"command": "/usr/bin/gcc",
+			"args": [
+				"-g",
+				"${file}",
+				"-o",
+				"${fileDirname}/bin/${fileBasenameNoExtension}"
+			],
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"problemMatcher": [
+				"$gcc"
+			],
+			"group": {
+				"isDefault": true,
+				"kind": "build"
+			}
+		}
+	]
+}
