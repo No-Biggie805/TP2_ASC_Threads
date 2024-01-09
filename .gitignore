@@ -3,3 +3,5 @@ BackupInfo.txt
 Threads_Examples
 Unix_Processes
 .ccls-cache
+.replit
+replit.nix
