@@ -15,7 +15,7 @@ typedef struct Dados {
 } Dados_t;
 
 //esta funcao tem como objectivo simular um sensor de temperatura..
-void *Sensor1(void *input) 
+void *Sensor2(void *input) 
 {
   ts.tv_sec = 1;
   ts.tv_nsec = 0;

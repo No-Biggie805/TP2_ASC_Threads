@@ -45,6 +45,8 @@ int main(int argc, char *argv[]) {
 
   int Running = 1;
   getDados->Running = Running;
+  int ArrSize = sizeof(array) / sizeof(int);
+  getDados->ArrSize = ArrSize;
   if (pthread_create(&th1_1, NULL, Sensor1, (void *)getDados) != 0)
     return 1;
 
