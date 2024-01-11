@@ -1,0 +1,9 @@
+Para fazer os threads com o processo:(exemplo no processo filho1)
+
+1-> processo filho 1 é criado, a implementação não deveria ser muito diferente da que estava para testar quando era para os getpids e pids, lel;
+
+2-> fazer os threads 1.1 e dps o 1.2, os mesmos irao escrever NO MESMO array global em mutex.
+
+3->Funcionamento como FIFO, primeiro a entrar, ser o primeiro a sair ordem crescente em que i=0; i<size(array); i++ ou descendente, que é o vice-verso
+
+% 4->
