@@ -1,10 +1,3 @@
-/*
-Links:
-Passing arguments to threads:
-http://www.cse.cuhk.edu.hk/~ericlo/teaching/os/lab/9-PThread/Pass.html.
-
-*/
-
 #include "string.h"
 #include <pthread.h>
 #include <stdio.h>
