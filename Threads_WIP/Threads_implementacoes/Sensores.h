@@ -10,6 +10,7 @@
 
 extern struct timespec ts;
 extern int array[TAM];
+extern pthread_mutex_t mutex;
 
 typedef struct Dados {
   int Running;
@@ -17,3 +18,4 @@ typedef struct Dados {
 } Dados_t;
 
 void *Sensor1(void *input);
+void *Sensor2(void *input);

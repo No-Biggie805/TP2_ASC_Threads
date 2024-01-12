@@ -5,3 +5,4 @@
 
 struct timespec ts;
 int array[TAM];
+pthread_mutex_t mutex;
