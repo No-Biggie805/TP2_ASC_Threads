@@ -29,7 +29,7 @@ void *Sensor1(void *input) {
 //Funcao do sensor2
 void *Sensor2(void *input) {
    
-  ts.tv_sec = 2;    //tempo em segundos, mudar para 5, defenir 5s por cada intervalo
+  ts.tv_sec = 1;    //tempo em segundos, mudar para 5, defenir 5s por cada intervalo
   ts.tv_nsec = 0;    //Tempo em nsegundos
   int i = 0;
 
