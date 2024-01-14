@@ -12,11 +12,12 @@ int main(int argc, char *argv[]) {
 
   int Running = 1;
   getDados->Running = Running;
+  getDados->Running2 = Running; // guarda o valor inteiro do main lel
   // int ArrSize = sizeof(array) / sizeof(int);
   // getDados->ArrSize = ArrSize;
 
-  pthread_mutex_init (&mutex, NULL);
-  
+  pthread_mutex_init(&mutex, NULL);
+
   if (pthread_create(&th1_1, NULL, Sensor1, (void *)getDados) != 0)
     return 1;
   if (pthread_create(&th1_2, NULL, Sensor2, (void *)getDados) != 0)
@@ -26,8 +27,8 @@ int main(int argc, char *argv[]) {
     return 3;
   if (pthread_join(th1_2, NULL) != 0)
     return 4;
-  
-  pthread_mutex_destroy (&mutex);
+
+  pthread_mutex_destroy(&mutex);
 
   printf("Exit\n");
   return 0;

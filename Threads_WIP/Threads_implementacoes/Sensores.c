@@ -17,7 +17,7 @@ void *Sensor1(void *input) {
     printf("%u\t, %d\n", random, array[i]);
     nanosleep(&ts, NULL);
 
-    if (i == 20) // fazer condiçao se passar de n valores
+    if (i == 3) // fazer condiçao se passar de n valores
       ((Dados_t *)input)->Running = 0; //definir flag a 0
     
     pthread_mutex_unlock (&mutex);
@@ -34,15 +34,15 @@ void *Sensor2(void *input) {
   int i = 0;
 
   while (((Dados_t *)input)->Running) {
-    pthread_mutex_lock (&mutex);
+    pthread_mutex_trylock (&mutex);
     i = i + 1;
     int random = rand() % 40;
     array[i] = random;
     printf("%u\t, %d\n", random, array[i]);
     nanosleep(&ts, NULL);
 
-    if (i == 30) // fazer condiçao se passar de n valores
-      ((Dados_t *)input)->Running = 0; //definir flag a 0
+    if (i == 6) // fazer condiçao se passar de n valores
+      ((Dados_t *)input)->Running2 = 0; //definir flag a 0
     
     pthread_mutex_unlock (&mutex);
   }

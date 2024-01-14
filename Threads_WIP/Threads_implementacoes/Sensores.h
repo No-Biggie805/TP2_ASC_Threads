@@ -13,7 +13,7 @@ extern int array[TAM];
 extern pthread_mutex_t mutex;
 
 typedef struct Dados {
-  int Running;
+  int Running, Running2;
   // int ArrSize;
 } Dados_t;
 
