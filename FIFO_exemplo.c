@@ -6,12 +6,13 @@
 #define TAM 10
 int FIFO[TAM];
 
-void EscreverFIFO() {
+void EscreverFIFO(int Running) {
   int i, j;
 
-  for (i = 0; i < 20; i++) { // iterar umas 20 vezes ja que havera valores a ser
+  while(Running){
+  // for (i = 0; i < 20; i++) { // iterar umas 20 vezes ja que havera valores a ser
                              // removidos
-    // i = i + 1;
+    i = i + 1;
     int random = rand() % 40;
 
     for (j = 0; j < TAM - 1; j++) {
@@ -27,8 +28,8 @@ void EscreverFIFO() {
         printf("|%d", FIFO[j]);
     }
     printf("Novo Valor Adicionado,%d\n", random);
-    // if (i == 20)
-    //   Running = 0;
+    if (i == 20)
+      Running = 0;
     
   }
   
@@ -37,7 +38,7 @@ void EscreverFIFO() {
 int main() {
   int i;
   int Running = 1;
-  EscreverFIFO();
+  EscreverFIFO(Running);
 
   return 0;
 }

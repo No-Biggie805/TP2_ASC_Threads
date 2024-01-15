@@ -35,8 +35,9 @@ void *PercorreArray(void *input) {
 int main(void) {
   // Dados_t *dados = (Dados_t *)malloc(sizeof(Dados_t));
 
-  Dados_t *alocDados =
-      (Dados_t *)malloc(sizeof(Dados_t) * 10); // alocacao dinamica, sizeof()*10 para alocar 10x mais 
+  Dados_t *alocDados = (Dados_t *)malloc(
+      sizeof(Dados_t) *
+      10); // alocacao dinamica, sizeof()*10 para alocar 10x mais
   int array[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
   pthread_t th; // criar o thread
 
