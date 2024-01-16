@@ -5,10 +5,10 @@
 
 #define TAM 10
 int FIFO[TAM];
-int soma = 0;
+float soma = 0;
 float media;
 int contador;
-int sizeFIFO = sizeof(FIFO) / sizeof(FIFO[0]);
+float sizeFIFO = sizeof(FIFO) / sizeof(FIFO[0]);
 void EscreverFIFO(int Running) {
   int i, j;
 
@@ -16,8 +16,8 @@ void EscreverFIFO(int Running) {
     // for (i = 0; i < 20; i++) { // iterar umas 20 vezes ja que havera valores
     // a ser removidos
     i = i + 1;
-    int random = rand() % 40;
-
+    int random = rand() % (35 - 25 + 1) + 25;
+    
     for (j = 0; j < TAM - 1; j++)
       FIFO[j] = FIFO[j + 1];
     FIFO[TAM - 1] = random;
@@ -34,16 +34,20 @@ void EscreverFIFO(int Running) {
         printf("|%d", FIFO[j]);
     }
     contador += 1;
-    printf("soma: %d\n", soma);
+    printf("soma: %.2f\n", soma);
 
     // for (j = 0; j < TAM - 1; j++){
     //   // if( j >= sizeFIFO)
     //    FIFO[j] = FIFO[j + 1];
     // }
+
+
+    media = soma / sizeFIFO;
+    printf("Media: %.2f\n", media);
+    
     soma -= FIFO[0];
     
-    media = (float)soma / sizeFIFO;
-    printf("Media: %.2f\n", media);
+    
     
     if (i == 20)
       Running = 0;
