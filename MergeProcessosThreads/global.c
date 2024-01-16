@@ -8,6 +8,7 @@ int FIFO[TAM];
 pthread_mutex_t mutex;
 int Contador, FLAG;
 pthread_cond_t condVar;
+int ArrSize;
 
 // //Coisas do Processo filho 2:
 // struct timespec ts_Lux;

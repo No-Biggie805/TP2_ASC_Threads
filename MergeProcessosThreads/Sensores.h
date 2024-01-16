@@ -15,10 +15,12 @@ extern pthread_mutex_t mutex;
 extern int Contador;
 extern int FLAG;
 extern pthread_cond_t condVar;
+extern int ArrSize;
 
 typedef struct Dados {
   int Running, Running2;
   int soma_Temperatura;
+  float media;
   // int ArrSize;
 } Dados_t;
 
