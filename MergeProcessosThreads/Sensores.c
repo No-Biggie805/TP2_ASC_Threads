@@ -11,19 +11,18 @@ void *Sensor1(void *input) {
   while (((Dados_t *)input)->Running) {
     // fazer o mutex na funcao, possivel ter de mudar!!
 
-    // while (FLAG == 1) { // enquanto a flag for 0, ele espera pelo thread
-    //   // esperando pelo thread
-    //   pthread_cond_wait(&condVar, &mutex);
-    // }
     FLAG = 0;
     nanosleep(&ts, NULL);
     pthread_mutex_lock(&mutex);
     i = i + 1;
     printf("Thread 1.1:\n");
+
     int random = rand() % 40;
     for (j = 0; j < TAM - 1; j++)
       FIFO[j] = FIFO[j + 1];
     FIFO[TAM - 1] = random;
+
+    ((Dados_t *)input)->soma_Temperatura += FIFO[TAM - 1];
 
     for (j = 0; j < TAM; j++) {
       if (j == 0)
@@ -35,6 +34,14 @@ void *Sensor1(void *input) {
     }
     printf("Novo Valor Adicionado,%d\n", random);
     Contador += 1;
+    printf("soma: %d\n", ((Dados_t *)input)->soma_Temperatura);
+
+    // for (j = 0; j < TAM; j++)
+    //   ((Dados_t *)input)->soma_Temperatura +=
+    //       FIFO[j]; // adicionar valor à memória da soma
+
+    ((Dados_t *)input)->soma_Temperatura-= FIFO[0];
+
     printf("Contagem:%d\n", Contador);
     printf("----------x---------\n");
 
@@ -61,16 +68,21 @@ void *Sensor2(void *input) {
   ts.tv_nsec = 0; // Tempo em nsegundos
   int i = 0, j;
 
+  // int random = (rand() % 
+  //   (upper - lower + 1)) + lower; 
+
   while (((Dados_t *)input)->Running2) {
     nanosleep(&ts, NULL);
     pthread_mutex_lock(&mutex);
+
     i = i + 1;
     printf("Thread 1.2:\n");
     int random = rand() % 40;
     for (j = 0; j < TAM - 1; j++)
       FIFO[j] = FIFO[j + 1];
     FIFO[TAM - 1] = random;
-
+    ((Dados_t *)input)->soma_Temperatura += FIFO[TAM - 1];
+    
     // print do buffer
     for (j = 0; j < TAM; j++) {
       if (j == 0)
@@ -82,6 +94,13 @@ void *Sensor2(void *input) {
     }
     printf("Novo Valor Adicionado,%d\n", random);
     Contador += 1;
+
+    // for (j = 0; j < TAM - 1; j++)
+    //   ((Dados_t *)input)->soma_Temperatura +=
+    //       FIFO[j]; // adicionar valor à memória da soma
+
+    ((Dados_t *)input)->soma_Temperatura-= FIFO[0];
+
     printf("Contagem:%d\n", Contador);
     printf("----------x---------\n");
 
@@ -106,12 +125,14 @@ void *ThreadMedia(void *input) {
     } // Sendo 1, deixa de esperar e executa o thread 1.3
     // Executar o thread 1.3
     printf("Teste, teste, Sou o processso 1.3\n");
+    // cálculo da média:
+    float media = (float)(((Dados_t *)input)->soma_Temperatura) / Contador;
+    printf("Media: %.2f\n", media);
 
-    // FLAG = 0;
-    
-    if (Contador < 50) //Definir antes do lock flag 1
+    if (Contador < 50) // Definir antes do lock flag 1
       FLAG = 0;
-    else if(Contador == 50)     //Senao 1, para quando voltar acima e descer nao fazer condition wait
+    else if (Contador == 50) // Senao 1, para quando voltar acima e descer nao
+                             // fazer condition wait
       return NULL;
 
     // printf("Teste, teste, Sou o processso 1.3");

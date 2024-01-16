@@ -1,24 +1,30 @@
-//versao certa
+// versao certa
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h> //necessário p/ função time()
 
 #define TAM 10
 int FIFO[TAM];
-
+int soma = 0;
+float media;
+int contador;
+int sizeFIFO = sizeof(FIFO) / sizeof(FIFO[0]);
 void EscreverFIFO(int Running) {
   int i, j;
 
-  while(Running){
-  // for (i = 0; i < 20; i++) { // iterar umas 20 vezes ja que havera valores a ser
-                             // removidos
+  while (Running) {
+    // for (i = 0; i < 20; i++) { // iterar umas 20 vezes ja que havera valores
+    // a ser removidos
     i = i + 1;
     int random = rand() % 40;
 
-    for (j = 0; j < TAM - 1; j++) {
+    for (j = 0; j < TAM - 1; j++)
       FIFO[j] = FIFO[j + 1];
-    }
     FIFO[TAM - 1] = random;
+    printf("Novo Valor Adicionado,%d\n", random);
+    
+    soma += FIFO[TAM - 1];
+    
     for (j = 0; j < TAM; j++) {
       if (j == 0)
         printf("[%d", FIFO[j]);
@@ -27,12 +33,21 @@ void EscreverFIFO(int Running) {
       else
         printf("|%d", FIFO[j]);
     }
-    printf("Novo Valor Adicionado,%d\n", random);
+    contador += 1;
+    printf("soma: %d\n", soma);
+
+    // for (j = 0; j < TAM - 1; j++){
+    //   // if( j >= sizeFIFO)
+    //    FIFO[j] = FIFO[j + 1];
+    // }
+    soma -= FIFO[0];
+    
+    media = (float)soma / sizeFIFO;
+    printf("Media: %.2f\n", media);
+    
     if (i == 20)
       Running = 0;
-    
   }
-  
 }
 
 int main() {

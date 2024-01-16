@@ -6,6 +6,7 @@
 #include <time.h>
 #include <unistd.h>
 
+//Coisas do processo filho 1:
 #define TAM 10
 
 extern struct timespec ts;
@@ -17,9 +18,31 @@ extern pthread_cond_t condVar;
 
 typedef struct Dados {
   int Running, Running2;
+  int soma_Temperatura;
   // int ArrSize;
 } Dados_t;
 
+//Threads do processo 1
 void *Sensor1(void *input);
 void *Sensor2(void *input);
 void *ThreadMedia(void *input);
+
+
+
+// //Coisas do processo filho 2:
+// extern struct timespec ts;
+// extern int FIFO[TAM];
+// extern pthread_mutex_t mutex;
+// extern int Contador;
+// extern int FLAG;
+// extern pthread_cond_t condVar;
+
+// typedef struct Dados {
+//   int Running, Running2;
+//   // int ArrSize;
+// } Dados_t;
+
+// //Threads do processo 1
+// void *Sensor1_Lux(void *input);
+// void *Sensor2_Lux(void *input);
+// void *ThreadMedia_Lux(void *input);

@@ -63,7 +63,7 @@ int main() {
 }
 // void *getUserInput(void *arg) {
 //   char input;
-//   while (Running) {
+//   while (Running) { 
 //     input = getc(stdin);
 //     if (input != EOF) {
 //       if (input == 'q' || input == 'Q')
