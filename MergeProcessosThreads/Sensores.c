@@ -4,6 +4,7 @@
 // temperatura
 void *Sensor1(void *input) {
   ArrSize = sizeof(FIFO) / sizeof(FIFO[0]);
+  FLAG = 0;
   ts.tv_sec =
       1; // tempo em segundos, mudar para 5, defenir 5s por cada intervalo
   ts.tv_nsec = 0; // Tempo em nsegundos
@@ -12,7 +13,6 @@ void *Sensor1(void *input) {
   while (((Dados_t *)input)->Running) {
     // fazer o mutex na funcao, possivel ter de mudar!!
 
-    FLAG = 0;
     nanosleep(&ts, NULL);
     pthread_mutex_lock(&mutex);
     i = i + 1;
@@ -143,11 +143,13 @@ void *ThreadMedia(void *input) {
 
     printf("Media da memoria: %.2f\n", (((Dados_t *)input)->media));
     // printf("Media calculada localmente(teste): %.2f\n", media2);
+
     int estado;
     if ((((Dados_t *)input)->media) < 30)
       estado = 0;
     else
       estado = 1;
+
     controla_AC(estado);
     printf("\n");
     printf("---------x----------\n");

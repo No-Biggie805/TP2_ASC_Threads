@@ -46,9 +46,7 @@ void EscreverFIFO(int Running) {
     printf("Media: %.2f\n", media);
     
     soma -= FIFO[0];
-    
-    
-    
+        
     if (i == 20)
       Running = 0;
   }

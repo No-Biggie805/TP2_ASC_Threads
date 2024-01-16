@@ -5,10 +5,15 @@ int main(int argc, char *argv[]) {
   int pid1, pid2; // Identificador do processo
 
   srand(time(NULL));
+  
   Dados_t *getDados =
       (Dados_t *)malloc(sizeof(Dados_t) * 10); // alocacao dinamica
-  pid1 = fork();                               // Processo 1
-  if (pid1 < 0)                                // Se o fork() retornou erro
+
+  Dados_t2 *getDados_Lux = (Dados_t2 *)malloc(
+      sizeof(Dados_t2) * 10); // alocacao dinamica para dados da luz
+
+  pid1 = fork(); // Processo 1
+  if (pid1 < 0)  // Se o fork() retornou erro
   {
     perror(" Error: ");
     return -1;
@@ -16,6 +21,7 @@ int main(int argc, char *argv[]) {
   if (pid1 == 0) // if in child1 process
   {
     printf(" Hello from child1\t\n");
+
     // create thread
     pthread_t th1_1, th1_2, th1_3;
     int Running = 1;
@@ -48,6 +54,7 @@ int main(int argc, char *argv[]) {
     printf("\nmorreu o child1\n");
     exit(0);
   } else { // PARENT
+    
     pid2 = fork();
     if (pid2 < 0) // Se o fork() retornou erro
     {
@@ -57,12 +64,39 @@ int main(int argc, char *argv[]) {
 
     if (pid2 == 0) {
       printf(" Hello from child2\t\n");
+      // create thread
+      pthread_t th2_1, th2_2, th2_3;
+      int Running_Lux = 1;
+      getDados_Lux->Running = Running_Lux;
+      getDados_Lux->Running2 = Running_Lux; // guarda o valor inteiro do main lel
+      // int ArrSize = sizeof(array) / sizeof(int);
+      // getDados->ArrSize = ArrSize;
 
+      // parte de inicializacao dinamica dos mutexes
+      pthread_mutex_init(&mutex_Lux, NULL); // inicializar o mutex normal
+      pthread_cond_init(&condVar_Lux,NULL); // inicializar condition waits para os mutexes
 
-      
+      if (pthread_create(&th2_1, NULL, Sensor1_Lux, (void *)getDados_Lux) != 0)
+        return 1;
+      if (pthread_create(&th2_2, NULL, Sensor2_Lux, (void *)getDados_Lux) != 0)
+        return 2;
+      if (pthread_create(&th2_3, NULL, ThreadMedia_Lux, (void *)getDados_Lux) !=
+          0)
+        return 5;
+
+      if (pthread_join(th2_1, NULL) != 0)
+        return 3;
+      if (pthread_join(th2_2, NULL) != 0)
+        return 4;
+      if (pthread_join(th2_3, NULL) != 0)
+        return 6;
+
+      pthread_mutex_destroy(&mutex_Lux);
+      pthread_cond_destroy(&condVar_Lux);
+
       printf("\nmorreu o child2\n");
-      
-      exit(0); //exit tem de tar aqui e implementar tudo antes do mesmo!!!!
+
+      exit(0); // exit tem de tar aqui e implementar tudo antes do mesmo!!!!
     }
     // Pai esperar pelos dois filhos e terminar o programa.
     waitpid(pid1, NULL, 0);
@@ -74,4 +108,3 @@ int main(int argc, char *argv[]) {
   // printf("Exit\n");
   return 0;
 }
-

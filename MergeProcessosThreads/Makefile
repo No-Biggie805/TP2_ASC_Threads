@@ -5,8 +5,8 @@ TARGET = exp
 
 all: $(TARGET)
 
-$(TARGET): main.c Sensores.c global.c
-	$(CC) $(CFLAGS) -o $(TARGET)  main.c Sensores.c global.c
+$(TARGET): main.c Sensores.c global.c SensoresLux.c
+	$(CC) $(CFLAGS) -o $(TARGET)  main.c Sensores.c global.c SensoresLux.c
 
 clean:
 	rm -f $(TARGET)

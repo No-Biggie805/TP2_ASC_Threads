@@ -10,14 +10,16 @@ int Contador, FLAG;
 pthread_cond_t condVar;
 int ArrSize;
 
-// //Coisas do Processo filho 2:
+//Coisas do Processo filho 2:
 // struct timespec ts_Lux;
-// int FIFO_Lux[TAM];
-// pthread_mutex_t mutex_Lux;
-// int Contador_Lux, FLAG_Lux;
-// pthread_cond_t condVar_Lux;
-// int ArrSizeLux;
 
+int FIFO_Lux[TAM_Lux];
+pthread_mutex_t mutex_Lux;
+int Contador_Lux, FLAG_Lux;
+pthread_cond_t condVar_Lux;
+int ArrSize_Lux;
+
+//Funcao controla_AC do processo 1
 void controla_AC(int estado){
   if(estado == 0)
     printf("AC [OFF]");
