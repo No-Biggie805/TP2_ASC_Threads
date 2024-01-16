@@ -15,16 +15,18 @@ void EscreverFIFO(int Running) {
   while (Running) {
     // for (i = 0; i < 20; i++) { // iterar umas 20 vezes ja que havera valores
     // a ser removidos
+
+    fflush(stdout);
     i = i + 1;
     int random = rand() % (35 - 25 + 1) + 25;
-    
+
     for (j = 0; j < TAM - 1; j++)
       FIFO[j] = FIFO[j + 1];
     FIFO[TAM - 1] = random;
     printf("Novo Valor Adicionado,%d\n", random);
-    
+
     soma += FIFO[TAM - 1];
-    
+
     for (j = 0; j < TAM; j++) {
       if (j == 0)
         printf("[%d", FIFO[j]);
@@ -41,12 +43,11 @@ void EscreverFIFO(int Running) {
     //    FIFO[j] = FIFO[j + 1];
     // }
 
-
     media = soma / sizeFIFO;
     printf("Media: %.2f\n", media);
-    
+
     soma -= FIFO[0];
-        
+    fflush(stdout);
     if (i == 20)
       Running = 0;
   }
