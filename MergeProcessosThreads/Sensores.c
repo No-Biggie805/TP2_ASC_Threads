@@ -6,7 +6,7 @@ void *Sensor1(void *input) {
   ArrSize = sizeof(FIFO) / sizeof(FIFO[0]);
   FLAG = 0;
   ts.tv_sec =
-      1; // tempo em segundos, mudar para 5, defenir 5s por cada intervalo
+      5; // tempo em segundos, mudar para 5, defenir 5s por cada intervalo
   ts.tv_nsec = 0; // Tempo em nsegundos
   int i = 0, j;
 
@@ -71,7 +71,7 @@ void *Sensor2(void *input) {
   // }
   FLAG = 0;
   ts.tv_sec =
-      1; // tempo em segundos, mudar para 5, defenir 5s por cada intervalo
+      5; // tempo em segundos, mudar para 5, defenir 5s por cada intervalo
   ts.tv_nsec = 0; // Tempo em nsegundos
   int i = 0, j;
 

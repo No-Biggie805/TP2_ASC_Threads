@@ -7,7 +7,7 @@ void *Sensor1_Lux(void *input) {
   FLAG_Lux = 0;
 
   ts.tv_sec =
-      2; // tempo em segundos, mudar para 5, defenir 5s por cada intervalo
+      10; // tempo em segundos, mudar para 5, defenir 5s por cada intervalo
   ts.tv_nsec = 0; // Tempo em nsegundos
   int i = 0, j;
 
@@ -71,7 +71,7 @@ void *Sensor2_Lux(void *input) {
   ArrSize_Lux = sizeof(FIFO_Lux) / sizeof(FIFO_Lux[0]);
   FLAG_Lux = 0;
   ts.tv_sec =
-      2; // tempo em segundos, mudar para 5, defenir 5s por cada intervalo
+      10; // tempo em segundos, mudar para 5, defenir 5s por cada intervalo
   ts.tv_nsec = 0; // Tempo em nsegundos
   int i = 0, j;
 
