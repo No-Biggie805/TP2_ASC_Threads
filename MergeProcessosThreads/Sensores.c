@@ -12,9 +12,10 @@ void *Sensor1(void *input) {
 
   while (((Dados_t *)input)->Running) {
     // fazer o mutex na funcao, possivel ter de mudar!!
-
     nanosleep(&ts, NULL);
+    
     pthread_mutex_lock(&mutex);
+    fflush(stdout);
     i = i + 1;
     printf("Thread 1.1:\n");
 
@@ -34,6 +35,7 @@ void *Sensor1(void *input) {
       else
         printf("|%d", FIFO[j]);
     }
+    
     printf("Novo Valor Adicionado,%d\n", random);
     Contador += 1;
     printf("soma: %d\n", ((Dados_t *)input)->soma_Temperatura);
@@ -77,8 +79,11 @@ void *Sensor2(void *input) {
   //   (upper - lower + 1)) + lower;
 
   while (((Dados_t *)input)->Running2) {
+       
     nanosleep(&ts, NULL);
+    
     pthread_mutex_lock(&mutex);
+    fflush(stdout);
 
     i = i + 1;
     printf("Thread 1.2:\n");
@@ -134,6 +139,7 @@ void *ThreadMedia(void *input) {
       pthread_cond_wait(&condVar, &mutex);
     } // Sendo 1, deixa de esperar e executa o thread 1.3
     // Executar o thread 1.3
+    fflush(stdout);
     printf("Teste, teste, Sou o processso 1.3\n");
     // cálculo da média:
     printf("tamanho do array: %d\n", ArrSize);
@@ -159,7 +165,9 @@ void *ThreadMedia(void *input) {
     else if (Contador == 50) // Senao 1, para quando voltar acima e descer nao
                              // fazer condition wait
       return NULL;
-
+    
+    // fflush(stdout);
+    
     // printf("Teste, teste, Sou o processso 1.3");
     pthread_mutex_unlock(&mutex);
   }

@@ -5,7 +5,7 @@ int main(int argc, char *argv[]) {
   int pid1, pid2; // Identificador do processo
 
   srand(time(NULL));
-  
+
   Dados_t *getDados =
       (Dados_t *)malloc(sizeof(Dados_t) * 10); // alocacao dinamica
 
@@ -54,7 +54,7 @@ int main(int argc, char *argv[]) {
     printf("\nmorreu o child1\n");
     exit(0);
   } else { // PARENT
-    
+
     pid2 = fork();
     if (pid2 < 0) // Se o fork() retornou erro
     {
@@ -68,13 +68,15 @@ int main(int argc, char *argv[]) {
       pthread_t th2_1, th2_2, th2_3;
       int Running_Lux = 1;
       getDados_Lux->Running = Running_Lux;
-      getDados_Lux->Running2 = Running_Lux; // guarda o valor inteiro do main lel
+      getDados_Lux->Running2 =
+          Running_Lux; // guarda o valor inteiro do main lel
       // int ArrSize = sizeof(array) / sizeof(int);
       // getDados->ArrSize = ArrSize;
 
       // parte de inicializacao dinamica dos mutexes
       pthread_mutex_init(&mutex_Lux, NULL); // inicializar o mutex normal
-      pthread_cond_init(&condVar_Lux,NULL); // inicializar condition waits para os mutexes
+      pthread_cond_init(&condVar_Lux,
+                        NULL); // inicializar condition waits para os mutexes
 
       if (pthread_create(&th2_1, NULL, Sensor1_Lux, (void *)getDados_Lux) != 0)
         return 1;
