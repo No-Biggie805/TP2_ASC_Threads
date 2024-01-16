@@ -16,3 +16,11 @@ int ArrSize;
 // pthread_mutex_t mutex_Lux;
 // int Contador_Lux, FLAG_Lux;
 // pthread_cond_t condVar_Lux;
+// int ArrSizeLux;
+
+void controla_AC(int estado){
+  if(estado == 0)
+    printf("AC [OFF]");
+  else
+    printf("AC [ON]");
+}

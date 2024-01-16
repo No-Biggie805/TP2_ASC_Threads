@@ -28,7 +28,7 @@ typedef struct Dados {
 void *Sensor1(void *input);
 void *Sensor2(void *input);
 void *ThreadMedia(void *input);
-
+void controla_AC(int estado);
 
 
 // //Coisas do processo filho 2:
@@ -38,11 +38,12 @@ void *ThreadMedia(void *input);
 // extern int Contador;
 // extern int FLAG;
 // extern pthread_cond_t condVar;
+// extern int ArrSizeLux;
 
-// typedef struct Dados {
+// typedef struct Dados2 {
 //   int Running, Running2;
 //   // int ArrSize;
-// } Dados_t;
+// } Dados_t2;
 
 // //Threads do processo 1
 // void *Sensor1_Lux(void *input);
