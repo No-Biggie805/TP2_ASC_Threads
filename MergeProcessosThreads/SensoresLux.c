@@ -2,22 +2,24 @@
 
 // esta funcao tem como objectivo simular um sensor de temperatura.. Sensor 1 de
 // temperatura
-void *Sensor1_Lux(void *input) {
+void *Sensor1_Lux(void *input)
+{
   ArrSize_Lux = sizeof(FIFO_Lux) / sizeof(FIFO_Lux[0]);
   FLAG_Lux = 0;
 
   ts.tv_sec =
-      10; // tempo em segundos, mudar para 5, defenir 5s por cada intervalo
+      1;         // tempo em segundos, mudar para 5, defenir 5s por cada intervalo
   ts.tv_nsec = 0; // Tempo em nsegundos
   int i = 0, j;
 
-  while (((Dados_t2 *)input)->Running) {
+  while (((Dados_t2 *)input)->Running)
+  {
     // fazer o mutex_Lux na funcao, possivel ter de mudar!!
-    
+
     nanosleep(&ts, NULL);
-    
+
     pthread_mutex_lock(&mutex_Lux);
-    
+
     fflush(stdout);
     i = i + 1;
     printf("Thread 2.1:\n");
@@ -30,7 +32,8 @@ void *Sensor1_Lux(void *input) {
 
     ((Dados_t2 *)input)->soma_Lux += FIFO_Lux[TAM_Lux - 1];
 
-    for (j = 0; j < TAM_Lux; j++) {
+    for (j = 0; j < TAM_Lux; j++)
+    {
       if (j == 0)
         printf("[%d", FIFO_Lux[j]);
       else if (j == TAM_Lux - 1)
@@ -59,30 +62,32 @@ void *Sensor1_Lux(void *input) {
       ((Dados_t2 *)input)->Running = 0; // definir flag a 0
     pthread_mutex_unlock(&mutex_Lux);
 
-    FLAG_Lux = 1; // sinalizar que acabou o thread no momento
+    FLAG_Lux = 1;                      // sinalizar que acabou o thread no momento
     pthread_cond_signal(&condVar_Lux); // enviar o sinal para o thread 1.3
   }
   return NULL;
 }
 
 // Funcao do sensor2
-void *Sensor2_Lux(void *input) {
+void *Sensor2_Lux(void *input)
+{
 
   ArrSize_Lux = sizeof(FIFO_Lux) / sizeof(FIFO_Lux[0]);
   FLAG_Lux = 0;
   ts.tv_sec =
-      10; // tempo em segundos, mudar para 5, defenir 5s por cada intervalo
+      2;         // tempo em segundos, mudar para 5, defenir 5s por cada intervalo
   ts.tv_nsec = 0; // Tempo em nsegundos
   int i = 0, j;
 
-  while (((Dados_t2 *)input)->Running2) {
-     
+  while (((Dados_t2 *)input)->Running2)
+  {
+
     nanosleep(&ts, NULL);
 
     pthread_mutex_lock(&mutex_Lux);
-    
+
     fflush(stdout);
-    
+
     i = i + 1;
     printf("Thread 2.2:\n");
 
@@ -94,7 +99,8 @@ void *Sensor2_Lux(void *input) {
     ((Dados_t2 *)input)->soma_Lux += FIFO_Lux[TAM_Lux - 1];
 
     // print do buffer
-    for (j = 0; j < TAM_Lux; j++) {
+    for (j = 0; j < TAM_Lux; j++)
+    {
       if (j == 0)
         printf("[%d", FIFO_Lux[j]);
       else if (j == TAM_Lux - 1)
@@ -102,12 +108,11 @@ void *Sensor2_Lux(void *input) {
       else
         printf("|%d", FIFO_Lux[j]);
     }
-    
+
     printf("Novo Valor Adicionado,%d\n", random);
     Contador_Lux += 1;
     printf("soma: %d\n", ((Dados_t2 *)input)->soma_Lux);
-    (((Dados_t2 *)input)->media_Lux) =
-        (float)(((Dados_t2 *)input)->soma_Lux) / (float)ArrSize_Lux;
+    (((Dados_t2 *)input)->media_Lux) = (float)(((Dados_t2 *)input)->soma_Lux) / (float)ArrSize_Lux;
 
     // for (j = 0; j < TAM - 1; j++)
     //   ((Dados_t *)input)->soma_Temperatura +=
@@ -118,22 +123,25 @@ void *Sensor2_Lux(void *input) {
     printf("Contagem:%d\n", Contador_Lux);
     printf("----------x---------\n");
 
-    if (i == 30) // fazer condiçao se passar de n valores
+    if (i == 30)                         // fazer condiçao se passar de n valores
       ((Dados_t2 *)input)->Running2 = 0; // definir flag a 0
 
     pthread_mutex_unlock(&mutex_Lux);
 
-    FLAG_Lux = 1; // sinalizar que acabou o thread no momento
+    FLAG_Lux = 1;                      // sinalizar que acabou o thread no momento
     pthread_cond_signal(&condVar_Lux); // enviar o sinal para o thread 1.3
   }
   return NULL;
 }
 
-void *ThreadMedia_Lux(void *input) {
-
-  while (1) {
+void *ThreadMedia_Lux(void *input)
+{
+int Ativado = 1;
+  while (Ativado)
+  {
     pthread_mutex_lock(&mutex_Lux);
-    while (FLAG_Lux == 0) { // enquanto a flag for 0, ele espera pelo thread
+    while (FLAG_Lux == 0)
+    { // enquanto a flag for 0, ele espera pelo thread
       // esperando pelo thread
       pthread_cond_wait(&condVar_Lux, &mutex_Lux);
     } // Sendo 1, deixa de esperar e executa o thread 1.3
@@ -142,30 +150,19 @@ void *ThreadMedia_Lux(void *input) {
     printf("Teste, teste, Sou o processso 2.3\n");
     // cálculo da média:
     printf("tamanho do array: %d\n", ArrSize_Lux);
-
-    // float media2 = (float)(((Dados_t *)input)->soma_Temperatura) +
-    // FIFO_Lux[0] / (float)ArrSize;
-
     printf("Media da memoria: %.2f\n", (((Dados_t2 *)input)->media_Lux));
-    // printf("Media calculada localmente(teste): %.2f\n", media2);
-    // int estado;
-    // if ((((Dados_t2 *)input)->media_Lux) < 30)
-    //   estado = 0;
-    // else
-    //   estado = 1;
-    // controla_AC(estado);
     printf("\n");
     printf("---------x----------\n");
 
     if (Contador_Lux < 50) // Definir antes do lock flag 1
       FLAG_Lux = 0;
-    else if (Contador_Lux == 50) // Senao 1, para quando voltar acima e descer
+    else if (Contador_Lux == 50){ // Senao 1, para quando voltar acima e descer
                                  // nao fazer condition wait
-      return NULL;
-    
-    
+      FLAG_Lux = 1;
+      Ativado = 0;
+    }
     // printf("Teste, teste, Sou o processso 1.3");
     pthread_mutex_unlock(&mutex_Lux);
   }
-  // return NULL;
+  return NULL;
 }

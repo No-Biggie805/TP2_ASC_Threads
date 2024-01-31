@@ -6,7 +6,7 @@ void *Sensor1(void *input) {
   ArrSize = sizeof(FIFO) / sizeof(FIFO[0]);
   FLAG = 0;
   ts.tv_sec =
-      5; // tempo em segundos, mudar para 5, defenir 5s por cada intervalo
+      1; // tempo em segundos, mudar para 5, defenir 5s por cada intervalo
   ts.tv_nsec = 0; // Tempo em nsegundos
   int i = 0, j;
 
@@ -71,7 +71,7 @@ void *Sensor2(void *input) {
   // }
   FLAG = 0;
   ts.tv_sec =
-      5; // tempo em segundos, mudar para 5, defenir 5s por cada intervalo
+      1; // tempo em segundos, mudar para 5, defenir 5s por cada intervalo
   ts.tv_nsec = 0; // Tempo em nsegundos
   int i = 0, j;
 
@@ -107,6 +107,7 @@ void *Sensor2(void *input) {
     printf("Novo Valor Adicionado,%d\n", random);
     Contador += 1;
     printf("soma: %d\n", ((Dados_t *)input)->soma_Temperatura);
+
     (((Dados_t *)input)->media) =
         (float)(((Dados_t *)input)->soma_Temperatura) / (float)ArrSize;
 
@@ -114,7 +115,9 @@ void *Sensor2(void *input) {
     //   ((Dados_t *)input)->soma_Temperatura +=
     //       FIFO[j]; // adicionar valor à memória da soma
 
-    ((Dados_t *)input)->soma_Temperatura -= FIFO[0];
+
+    
+    ((Dados_t *)input)->soma_Temperatura -= FIFO[0]; //Problematico por causa do thread media..
 
     printf("Contagem:%d\n", Contador);
     printf("----------x---------\n");
@@ -131,8 +134,8 @@ void *Sensor2(void *input) {
 }
 
 void *ThreadMedia(void *input) {
-
-  while (1) {
+int Ativado = 1;
+  while (Ativado) {
     pthread_mutex_lock(&mutex);
     while (FLAG == 0) { // enquanto a flag for 0, ele espera pelo thread
       // esperando pelo thread
@@ -162,14 +165,16 @@ void *ThreadMedia(void *input) {
 
     if (Contador < 50) // Definir antes do lock flag 1
       FLAG = 0;
-    else if (Contador == 50) // Senao 1, para quando voltar acima e descer nao
+    else if (Contador == 50){ // Senao 1, para quando voltar acima e descer nao
                              // fazer condition wait
-      return NULL;
+      FLAG = 1;
+      Ativado = 0;
     
+    }
     // fflush(stdout);
     
     // printf("Teste, teste, Sou o processso 1.3");
     pthread_mutex_unlock(&mutex);
   }
-  // return NULL;
+  return NULL;
 }
